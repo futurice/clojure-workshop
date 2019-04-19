@@ -6,10 +6,10 @@ Basic workshop/course on Clojure programming.
 
 ##### Java
 Version 1.8.0 or higher
-The command: `java -version` should output: `[...] version "1.8.0_202"`
+The command: `java -version` should output: `[...] version "1.8.0_XXX"`
 ##### Lein
-[Lein](https://leiningen.org/) Version 2.8.0 or higher
-The command: `lein -v` should output: `Leiningen 2.8.1 on Java 1.8.0_202 OpenJDK 64-Bit Server VM`
+[Lein](https://leiningen.org/) Version 2.9.1 or higher
+The command: `lein -v` should output: `Leiningen 2.9.1 on Java 1.8.0_XXX [...]`
 ##### Nightcode
 [Nightcode](https://sekao.net/nightcode/)
 
