@@ -4,10 +4,14 @@ Basic workshop/course on Clojure programming.
 
 ## Prerequisite
 
-##### Clojure
-Version 1.9.0 or higher
+##### Java
+Version 1.8.0 or higher
+The command: `java -version` should output: `[...] version "1.8.0_202"`
 ##### Lein
-Version 2.8.0 or higher
+[Lein](https://leiningen.org/) Version 2.8.0 or higher
+The command: `lein -v` should output: `Leiningen 2.8.1 on Java 1.8.0_202 OpenJDK 64-Bit Server VM`
+##### Nightcode
+[Nightcode](https://sekao.net/nightcode/)
 
 ## Workshop set up
 
@@ -15,9 +19,9 @@ The workshop is split into 7 sections
 
 1. Introduction
 2. Basic Development - REPL
-3. Backend programming
+3. Backend Programming
 4. Introduction into Clojurescript
-5. Frontend programming
+5. Frontend Programming
 6. Database (Extra credit)
 7. Deploying (Extra credit)
 
