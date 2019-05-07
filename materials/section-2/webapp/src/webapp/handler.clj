@@ -1,6 +1,7 @@
 (ns webapp.handler
   (:require [compojure.core :refer :all]
             [compojure.route :as route]
+            [compojure.coercions :refer [as-int]]
             [ring.util.response :as r]
             [ring.middleware.params :as request-middleware]
             [ring.middleware.json :as json-middleware]
@@ -17,15 +18,29 @@
 
 (def id-counter (atom 0))
 
+(defn- add-todo [todo]
+  (swap! todos conj todo))
+
+(defn- remove-todo [id]
+  (reset! todos (remove (fn [todo] (= (:id todo) id)) @todos)))
+
+(defn- toggle-done [id]
+  (when-let [todo (first (filter #(= (:id %) id) @todos))]
+    (remove-todo id)
+    (add-todo (assoc todo :done (-> todo :done not)))))
+
 (defroutes app-routes
   (context "/api" []
     (GET "/todos" []
       (r/response @todos))
     (POST "/todos" [name]
-      (swap! todos conj {:id (swap! id-counter inc) :name name :done false})
+      (add-todo {:id (swap! id-counter inc) :name name :done false})
       (r/response @todos))
-    (DELETE "/todos/:id" [id]
-      (reset! todos (remove (fn [todo] (= (:id todo) (Integer/parseInt id))) @todos))
+    (PATCH "/todos/:id" [id :<< as-int]
+      (toggle-done id)
+      (r/response @todos))
+    (DELETE "/todos/:id" [id :<< as-int]
+      (remove-todo id)
       (r/response @todos)))
   (route/not-found "Not Found"))
 
