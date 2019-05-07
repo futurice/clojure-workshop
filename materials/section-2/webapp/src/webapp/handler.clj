@@ -18,14 +18,15 @@
 (def id-counter (atom 0))
 
 (defroutes app-routes
-  (GET "/todos" []
-    (r/response @todos))
-  (POST "/todos" [name]
-    (swap! todos conj {:id (swap! id-counter inc) :name name :done false})
-    (r/response @todos))
-  (DELETE "/todos/:id" [id]
-    (reset! todos (remove (fn [todo] (= (:id todo) (Integer/parseInt id))) @todos))
-    (r/response @todos))
+  (context "/api" []
+    (GET "/todos" []
+      (r/response @todos))
+    (POST "/todos" [name]
+      (swap! todos conj {:id (swap! id-counter inc) :name name :done false})
+      (r/response @todos))
+    (DELETE "/todos/:id" [id]
+      (reset! todos (remove (fn [todo] (= (:id todo) (Integer/parseInt id))) @todos))
+      (r/response @todos)))
   (route/not-found "Not Found"))
 
 (def app
