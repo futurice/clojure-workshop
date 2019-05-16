@@ -1,6 +1,3 @@
-;; I don't think this is matters so much for the scope of what we're looking to do
-;; Especially considering we will be using atoms pretty extensively (at least for the client side)
-
 ;; (ns koans.16-refs
 ;;   (:require [koan-engine.core :refer :all]))
 
