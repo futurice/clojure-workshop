@@ -57,13 +57,23 @@ Namespace is defined and the core of Compojure is included along with the route 
 ```
 
 `defroutes` is a macro provided by Compojure. It takes two parameters. A name and route handlers. A route handler is nothing more than a basic function. Compojure provides a handful of route handlers. `GET`, `POST`, `PATCH`, `PUT`, `HEAD`, `DELETE`, `OPTIONS` and `ANY`.
-All of these route handlers work in the same way. Each of them take a path as the first argument, a vector with bound route parameters, and a route body as the last argument.
+All of these route handlers work in the same way. Each of them take a path as the first argument, a request body, and a route body as the last argument.
 
 ```clojure
-(GET "/home" [person] (str "Welcome Home " person " !"))
+(GET "/home" request (str "Welcome Home " ((:params request) "person")  "!"))
   ^     ^       ^                      ^
-method route  params                  body
+method route  request                body
 ```
+
+The request body is quite unique. Compojure will compile the request differently depending on what you have given it as the second argument. This way of defining routes can be a bit unclear, as *all request params are always strings and not keywords*, and fetching the params key from the request object can be very tiring and lead to verbose code. The most common practice is to pass it a vector. Compojure will automatically destruct the request object and pass the request parameters present in the vector into your route body.
+
+```clojure
+(GET "/home" [person] (str "Welcome Home " person "!"))
+  ^     ^       ^                      ^
+method route  params                body
+```
+
+This is the more common approach when writing routes.
 
 The last part:
 
