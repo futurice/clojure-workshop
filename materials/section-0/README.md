@@ -10,6 +10,10 @@ What is Clojure?
 
 That is a nice and short summary of Clojure. Although, some key things are missing from the description. As the description points out, Clojure is a Lisp, it's also dynamically typed, and it runs on the JVM. In the next section, we'll go through the fundamentals of the language.
 
+#### Why Clojure?
+
+Good question! As mentioned above, Clojure is very feature rich. Clojure was built from the ground up to solve concurrency issues and it has a strong connection to Java. If you are writing a piece of software that performs a lot of concurrent operations and needs to easily manipulate data structures and it should also be able to run on any platform, then Clojure might be the right choice for you. Also, the name is very sexy!
+
 ## Table of contents
 
 1. [Syntax](#syntax)
