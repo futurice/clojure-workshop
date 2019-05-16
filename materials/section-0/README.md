@@ -13,7 +13,7 @@ That is a nice and short summary of Clojure. Although, some key things are missi
 ## Table of contents
 
 1. [Syntax](#syntax)
-2. [Data Types](#data-types)
+2. [Types](#types)
 3. [Special Forms](#special-forms)
 4. [References](#references)
 
@@ -28,7 +28,7 @@ image from clojure.org
 Above is an example on how to language is structured and evaluated. One key aspect of the language is revealed here, Clojure only has expression, and *all expressions return some value*. Don't worry if this is confusing, we will now go through the basics of the language in detail.
 
 
-## Data Types
+## Types
 The first fundamental aspect of Clojure, is that all the underlying *types*
 are actually plain old Java classes. All of the following types, except for *atoms*, are intrinsically immutable.
 
