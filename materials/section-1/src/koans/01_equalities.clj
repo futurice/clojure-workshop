@@ -1,20 +1,6 @@
 (ns koans.01-equalities
   (:require [koan-engine.core :refer [mediations]]))
 
-"
-Equalities:
-
-The equality function in Clojure works similarly to x.equals(y) in Java. That is, it tries to compare numbers and collections in a type-independent manner.
-
-One thing to note - Clojure data structures are compared by value, and not by identity.
-
-If you run into any issues, remember, the REPL is your friend! Copy forms and evaluate them in the REPL for some help. If you want to find out what a function does, you can call (doc <function>) from within the REPL to retrive the docstring for the given function.
-
-clojuredocs.org is also a great resource to use if you want to see some examples of functions being used
-
-I've commented out some koans that I feel aren't critical and will allow us to stay on our timeframe, but you are more than welcome to tackle them if you have some time to spare.
-"
-
 (meditations
  ;; "We shall contemplate truth by testing reality, via equality"
  ;; (= __ true)
