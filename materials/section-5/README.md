@@ -10,12 +10,11 @@ Once you have docker installed create a `Dockerfile` inside the `section-2` fold
 
 ```
 FROM postgres:10
-EXPOSE 5432
 ENV POSTGRES_DB clojure_workshop_db
 ```
 
 Next, we will build and run our database
-run `docker build -t clojure_workshop_db .` to build the docker image of our database. Next, run `docker run clojure_workshop_db`.
+run `docker build -t clojure_workshop_db .` to build the docker image of our database. Next, run `docker run -p 5432:5432 clojure_workshop_db`.
 Now you should have a database up and running!
 
 ### Setup
