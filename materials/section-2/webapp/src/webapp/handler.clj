@@ -5,6 +5,7 @@
             [ring.util.response :as r]
             [ring.middleware.params :as request-middleware]
             [ring.middleware.json :as json-middleware]
+            [ring.middleware.cors :refer [wrap-cors]]
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]))
 
 ;; step 1 - lein new compojure webapp
@@ -47,5 +48,7 @@
 (def app
   (-> app-routes
       request-middleware/wrap-params
+      (wrap-cors :access-control-allow-origin [#"http://localhost:3449"]
+                 :access-control-allow-methods [:get :patch :post :delete])
       json-middleware/wrap-json-params
       json-middleware/wrap-json-response))
