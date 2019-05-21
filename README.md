@@ -17,13 +17,12 @@ The command: `lein -v` should output: `Leiningen 2.9.1 on Java 1.8.0_XXX [...]`
 
 The workshop is split into 7 sections
 
-1. Introduction
-2. Basic Development - REPL
-3. Backend Programming
-4. Introduction into Clojurescript
-5. Frontend Programming
-6. Database (Extra credit)
-7. Deploying (Extra credit)
+0. Introduction in Clojure
+1. Basic Development - REPL
+2. Backend Programming
+3. Frontend Programming with Clojurescript and Reagent
+4. Database (Extra credit)
+5. Deploying (Extra credit)
 
 ## License
 
