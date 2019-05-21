@@ -84,7 +84,7 @@ The last part:
 
 This is the bootstrapped application. Ring will look for this _var_ when starting the app. The app _var_ can be wrapped in middleware layers. Compojure wraps our routes with some default middlewares provided by Ring.
 
-**These middlewares should be deleted!**
+The default middlewares, such as `site-default` don't support json very well. We will be using json specific middlewares in our project, _so you can go ahead and delete the default middlewares._
 
 ```clojure
 (def app app-routes)
@@ -111,7 +111,34 @@ An other middleware that needs to be added before we can begin is `ring.middlewa
              wrap-json-response))
 ```
 
-Now everything is set up and we can begin building our REST API.
+We can now test our setup.
+
+```clojure
+(GET "/profile" [person] {:person person})
+```
+
+While testing this, you might have noticed that nothing gets returned from our API.
+Why is that? Ring expects that all routes, even the ones created by Compojure, should return a Ring response. An example Ring response could look like this:
+
+```clojure
+{:status 200
+ :headers {"Content-Type" "text/plain"}
+ :body "Hello World!"}
+```
+
+So, how do we fix this? We need to wrap our response in a map, like this:
+```clojure
+(GET "/profile" [person] {:status 200
+                          :body {:person person}})
+```
+
+But this isn't really an elegant solution. Luckly, Ring provides a helper function that creates this response map for us. Inside the `ring.util.response` namespace, there's a function conveniently called `response`. Once you've included the `ring.util.response` namespace, you can refactor your handler to look something like this:
+
+```clojure
+(GET "/profile" [person] (response {:person person}))
+```
+
+Now everything is set up and we can begin building the rest  our REST API.
 In the next section you will finally get to do some coding yourself, i.e. the tasks are next! Good luck!
 
 ---
