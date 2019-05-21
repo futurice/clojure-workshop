@@ -9,6 +9,29 @@ body {
   line-height: 1.5em;
 }
 
+ul {
+  padding: 0;
+}
+
+ul li {
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+ul li input {
+  margin-right: 10px;
+}
+
+ul li input[type="text"] {
+  width: 200px;
+}
+
+ul li.todo-item button {
+  margin-left: 5px;
+  border: 0;
+  background: #fff;
+}
+
 h1, h2, h3 {
   color: #000;
 }
