@@ -4,8 +4,8 @@ In this section we will delve into backend programming with Ring and Compojure. 
 
 Breakdown:
 
-- Ring -> Http server
-- Compojure -> Routing lib
+- Ring -> Http server ([docs](https://github.com/ring-clojure/ring/wiki))
+- Compojure -> Routing lib ([docs](https://github.com/weavejester/compojure/wiki))
 
 To scaffold a Compojure project, run `lein new compojure <name>` (replace name with a the name of your project). This command will create a Compojure project with the following folder structure:
 
@@ -23,7 +23,7 @@ To scaffold a Compojure project, run `lein new compojure <name>` (replace name w
         └── handler_test.clj
 ```
 
-The most interesting files are without a doubt, `project.clj` and `src/<name>/handler.clj`. The `project.clj` file is the file that describes the project to Leiningen. The project dependencies, name, description etc. are describes inside the `project.clj` file. Incase of a Compojure project, it also defines the entry point for the web-server: `:ring {:handler <name>.handler/app}`. This tells Ring where to look for the entrypoint so it can bootstrap the server. The second interesting file, is the `handler.clj` file. This is where the application is bootstrapped. It will look something like this:
+The most interesting files are without a doubt, `project.clj` and `src/<name>/handler.clj`. The `project.clj` file is the file that describes the project to Leiningen. The project dependencies, name, description etc. are described inside the `project.clj` file. In the case of a Compojure project, it also defines the entry point for the web-server: `:ring {:handler <name>.handler/app}`. This tells Ring where to look for the entrypoint so it can bootstrap the server. The second interesting file, is the `handler.clj` file. This is where the application is bootstrapped. It will look something like this:
 
 ```clojure
 (ns <name>.handler
@@ -48,7 +48,7 @@ Small breakdown:
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]))
 ```
 
-Namespace is defined and the core of Compojure is included along with the route namespace. It also requires the middleware namespace from Ring. Middlewares are just an easy way to handle requests before they reach your route handler. Ring has a few default ones which Compojure uses when it bootstraps the project.
+Our namespace is defined, and we include the Compojure core, the route namespace along with the middleware namespace from Ring. It also requires the middleware namespace from Ring. Middlewares are just an easy way to handle requests before they reach your route handler. Ring has a few default ones which are used in the Compojure template.
 
 ```clojure
 (defroutes app-routes
