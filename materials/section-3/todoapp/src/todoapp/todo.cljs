@@ -1,14 +1,39 @@
-(ns todoapp.todo)
+(ns todoapp.todo
+  (:require
+    [reagent.core :as r]
+    [ajax.core :refer [GET POST PATCH DELETE]]))
 
-(def conj-sort (comp (partial sort-by :id) conj))
+(def url-base "http://localhost:3000/api/todos")
 
-(defn add-todo [todos todo]
-  (swap! todos conj-sort todo))
+(def todos
+  (r/atom []))
 
-(defn remove-todo [todos id]
-  (reset! todos (remove (fn [todo] (= (:id todo) id)) @todos)))
+(defn- update-state! [data]
+  (println "update-state!" data)
+  (reset! todos data))
 
-(defn toggle-done [todos id]
-  (when-let [todo (first (filter #(= (:id %) id) @todos))]
-    (remove-todo todos id)
-    (add-todo todos (assoc todo :done (-> todo :done not)))))
+(defn fetch-todos! []
+  (GET url-base
+       {:handler update-state!}))
+
+(defn add-todo! [text]
+  (POST url-base
+        {:params {:name text}
+         :format :json
+         :response-format :json
+         :keywords? true
+         :handler update-state!}))
+
+(defn remove-todo! [id]
+  (println "remove-done!" id)
+  (DELETE (str url-base "/" id)
+         {:handler update-state!
+          :response-format :json
+          :keywords? true}))
+
+(defn toggle-done! [id]
+  (println "toggle-done!" id)
+  (PATCH (str url-base "/" id)
+         {:handler update-state!
+          :response-format :json
+          :keywords? true}))
