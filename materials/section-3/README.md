@@ -22,7 +22,7 @@ The Google Closure compiler allows for your ClojureScript code to be compiled in
 
 ### So, why not just use JavaScript?
 
-I think we can all agree here that JavaScript has some shortcomings. Since JavaScript is quite a feature-rich language, there are many corners in which to have bugs in your code. It requires extensive discipline from the JavaScript developers to ensure that the software written is bug-free. The amount of effort required to write robust code in JavaScript is vastly higher than to achieve the same feat in ClojureScript.
+I think we can all agree here that JavaScript has _some_ shortcomings. Since JavaScript is quite a feature-rich language, there are many corners in which to hide bugs in your code. It requires extensive discipline from the JavaScript developers to ensure that the software written is bug-free. The amount of effort required to write robust code in JavaScript is vastly higher than to achieve the same feat in ClojureScript.
 
 ### What are the differences between Clojure and ClojureScript?
 
@@ -99,9 +99,11 @@ If you'd like to read a little more in depth, I'd recommend turning to [this blo
 
 ## 2. Introduction to Reagent
 
+Reagent is a minimalistic interface between ClojureScript and React, and we will be using this today as the base of our frontend. It plays into ClojureScripts strengths by using just ClojureScript data and functions to define React components (rather than JSX sticking out like a sore thumb in the middle of some JavaScript code).
 
-- -> https://reagent-project.github.io/
-- until managing state
+The best place to learn the basics of Reagent is by going to the [official documentation](https://reagent-project.github.io/) and having a read through. You only need to read up until the end of the "Managing state in Reagent" section for the scope of this workshop, but you're more than welcome to continue reading if you have the time.
+
+Once you've read through and understood the basics of Reagent, let's continue by making our frontend project.
 
 ---
 
