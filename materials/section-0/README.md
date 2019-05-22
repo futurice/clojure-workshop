@@ -12,7 +12,8 @@ That is a nice and short summary of Clojure. Although, some key things are missi
 
 #### Why Clojure?
 
-Good question! As mentioned above, Clojure is very feature rich. Clojure was built from the ground up to solve concurrency issues and it has a strong connection to Java. If you are writing a piece of software that performs a lot of concurrent operations and needs to easily manipulate data structures and it should also be able to run on any platform, then Clojure might be the right choice for you. Also, the name is very sexy!
+Good question! As mentioned above, Clojure is very feature rich. Clojure was built from the ground up to solve concurrency issues and it has a strong connection to Java. Clojure also includes a very powerful REPL which makes testing code quite easy.
+A unique feature of Clojure is it's macro system, with which you can extend the capabilities of the language. If you are writing a piece of software that performs a lot of concurrent operations and needs to easily manipulate data structures and it should also be able to run on any platform, then Clojure might be the right choice for you.
 
 ## Table of contents
 
