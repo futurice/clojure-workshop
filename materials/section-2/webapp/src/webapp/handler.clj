@@ -19,8 +19,10 @@
 
 (def id-counter (atom 0))
 
+(def conj-sort (comp (partial sort-by :id) conj))
+
 (defn- add-todo [todo]
-  (swap! todos conj todo))
+  (swap! todos conj-sort todo))
 
 (defn- remove-todo [id]
   (reset! todos (remove (fn [todo] (= (:id todo) id)) @todos)))
