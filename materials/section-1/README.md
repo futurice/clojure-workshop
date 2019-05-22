@@ -61,9 +61,3 @@ The output is telling you that you have a failing test in `src/koans/equalities.
 The koans differ from normal TDD in that the tests are already written for you, so you'll have to pay close attention to the failure messages, because up until the very end, making a test pass just means that the next failure message comes up.
 
 You might notice that some of the koans are commented out - this means that you're welcome to skip these in order to keep to our time schedule. But, if you have some time to spare before we start the next section, I'd highly recommend going back and trying to tackle some.
-
-### License
-
-Copyright (C) 2019
-
-Distributed under the Eclipse Public License, the same as Clojure.
