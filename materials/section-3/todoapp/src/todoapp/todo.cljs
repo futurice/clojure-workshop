@@ -9,31 +9,24 @@
   (r/atom []))
 
 (defn- update-state! [data]
-  (println "update-state!" data)
   (reset! todos data))
 
+(def default-options
+  {:handler update-state!
+   :response-format :json
+   :keywords? true})
+
 (defn fetch-todos! []
-  (GET url-base
-       {:handler update-state!}))
+  (GET url-base default-options))
 
 (defn add-todo! [text]
   (POST url-base
-        {:params {:name text}
-         :format :json
-         :response-format :json
-         :keywords? true
-         :handler update-state!}))
+        (merge default-options
+          {:params {:name text}
+           :format :json})))
 
 (defn remove-todo! [id]
-  (println "remove-done!" id)
-  (DELETE (str url-base "/" id)
-         {:handler update-state!
-          :response-format :json
-          :keywords? true}))
+  (DELETE (str url-base "/" id) default-options))
 
 (defn toggle-done! [id]
-  (println "toggle-done!" id)
-  (PATCH (str url-base "/" id)
-         {:handler update-state!
-          :response-format :json
-          :keywords? true}))
+  (PATCH (str url-base "/" id) default-options))

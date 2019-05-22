@@ -31,16 +31,16 @@
         "Add"]])))
 
 (defn home-page []
-  (do
-    [:ul
-     (for [todo @todos]
-       ^{:key (:id todo)} [render-todo todo])
-     [render-todo-adder]]))
+  [:ul
+   (for [todo @todos]
+     ^{:key (:id todo)} [render-todo todo])
+   [render-todo-adder]])
 
 ;; -------------------------
 ;; Initialize app
 
 (defn mount-root []
+  (fetch-todos!)
   (r/render [home-page] (.getElementById js/document "app")))
 
 (defn init! []
