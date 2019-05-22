@@ -11,7 +11,7 @@
 
  "You can do more than create strings, you can put them together"
  (= "Cool right?" (str __ __))
- n
+
  "You can even get certain characters"
  (= \C (get "Characters" __))
 
