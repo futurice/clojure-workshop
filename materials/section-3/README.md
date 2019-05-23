@@ -109,7 +109,7 @@ Once you've read through and understood the basics of Reagent, let's continue by
 
 ## 3. Create a new Reagent project
 
-Create the projec from template
+Create the project using the [reagent-frontend](https://github.com/reagent-project/reagent-frontend-template) template
 
 	$ cd materials/section-3
 	$ lein new reagent-frontend todoapp
