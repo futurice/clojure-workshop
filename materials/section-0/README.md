@@ -15,12 +15,17 @@ That is a nice and short summary of Clojure. Although, some key things are missi
 Good question! As mentioned above, Clojure is very feature rich. Clojure was built from the ground up to solve concurrency issues and it has a strong connection to Java. Clojure also includes a very powerful REPL which makes testing code quite easy.
 A unique feature of Clojure is it's macro system, with which you can extend the capabilities of the language. If you are writing a piece of software that performs a lot of concurrent operations and needs to easily manipulate data structures and it should also be able to run on any platform, then Clojure might be the right choice for you.
 
+If you're still unsure about Clojure maybe the creator, Rich Hickey, can convince you:
+https://www.youtube.com/watch?v=34_L7t7fD_U&t=745s
+
 ## Table of contents
 
 1. [Syntax](#syntax)
 2. [Types](#types)
-3. [Special Forms](#special-forms)
-4. [References](#references)
+3. [Reader](#reader)
+4. [Macros](#macros)
+5. [Special Forms](#special-forms)
+6. [References](#references)
 
 ## Syntax
 
@@ -31,7 +36,6 @@ The syntax, or structure of the language is quite different from what you might 
 image from clojure.org
 
 Above is an example on how to language is structured and evaluated. One key aspect of the language is revealed here, Clojure only has expression, and *all expressions return some value*. Don't worry if this is confusing, we will now go through the basics of the language in detail.
-
 
 ## Types
 The first fundamental aspect of Clojure, is that all the underlying *types*
@@ -62,6 +66,13 @@ Interestingly enough, any arithmetic operation that includes a ratio type will a
 ```clojure
 (* 1 1/2) ;; => 1/2
 (* 2 1/2) ;; => 1N
+```
+
+One thing to note is that any ratio number that can be represented as a whole number *it will always be represented as a whole number (long)*.
+
+```clojure
+2/1 ;; => 2
+(class 2/1) ;; => java.lang.Long
 ```
 
 #### Strings
@@ -132,10 +143,48 @@ The `@` is just a macro for deref, will get into macros later on. Clojure provid
 
 Don't worry about `def` just yet, we'll get into that one later on. As you can see in the examples above, `reset!` works a little bit differently than `swap!`. `swap!` will take an atom as the first argument and a function that will apply a change on the atom. `swap!` also takes an optional third argument, this argument would be an argument that would be passed to the applying function: `(swap! a-list conj :a-value) ;; => '(:a-value)` *note* `swap!` returns nil, the arrow, in this example, indicates the new mutated version. `reset!` only takes two arguments, an atom and a new value. An interesting thing you might have noticed is the use of the exclamation mark. This is a convention in lisp languages. The exclamation mark indicates that their is a side-effect made by the function. When you see the exclamation mark, most likely, an atom has been changed.
 
+## Reader
+
+The reader is a unique feature of Clojure. You could call it an extra build step. This step is taken before the source code get's compiled.
+Clojure has two steps of compilation in a sense, first the reader will turn your Clojure code into Clojure data structures, and then the compiler will turn the data structures into Java byte code. You can actually test the reader with Clojure's `read-string` function.
+
+```clojure
+(read-string "(+ 1 2 3)") ;; => (+ 1 2 3)
+```
+
+Why is this useful? Well, in Clojure the evaluation and reading (parsing) of the code is completely separate. This is an essential part in Clojure. The reader allows us to change how the code behaves, or even what the code looks like. This is done with the help of *macros*. In the above example we see a straightforward relationship between the reader and the data structure it produces. However, as mentioned, we can manipulate the data structure with the help of *reader macros*.
+
+```clojure
+(read-string "'(a b c)") ;; => (quote (a b c))
+```
+Above we see an example of a *reader macro*. `'` is the *quote* macro. The *quote* macro yields unevaluated Clojure expression.
+Clojure offers a handful of *reader macros*. To get a full understanding on how the reader works and how to reader macros work, you can read everything about the reader here: https://clojure.org/reference/reader
+
+## Macros
+
+Macros are one of the features that make Clojure amazing! Macros are quite special. Unlike normal functions, marcos are placed between the reader and evaluator in the Clojure lifecycle, and unlike functions, macros are created with the `defmacro` function. What this means, is that with macros we can manipulate unevaluated (yielded) data structures. We can essentially create new code and change existing code.
+
+Practical example:
+
+```clojure
+(defmacro macro-fn [form]
+  (drop-last form))
+
+(macro-fn (+ 2 nil)) ;; => 2
+
+(defn normal-fn [form]
+  (drop-last form))
+
+(normal-fn (+ 2 nil)) ;; => java.lang.NullPointerException
+```
+
+Why does this happen? Clojure syntax is evaluated from the inside out, except in macros and special forms. Macros get passed unevaluated expressions, that's why we can manipulate the unevaluated expression however we wish. In the case of a function, the inner most expression will always get evaluated first, and the result of that expression will get passed to the function body. In the example above the inner most expression resulted in a `NullPointerException`.
+
 
 ## Special Forms
 
-Next we will briefly look at special forms. These are forms that are evaluated differently (*special*) than normal types.
+Next we will briefly look at special forms. These are forms that are evaluated differently (*special*) than normal expressions. Special forms are not macros or functions, although they behave very similarly. Special forms are directly built in to the Clojure compiler. They are a fundamental building block of Clojure.
+Clojure has a dozen special forms, but generally you will only be using the following:
 
 #### def
 
@@ -223,7 +272,6 @@ A `let` can easily be used in conjunction with `defn`
 ```
 
 And that's it! We covered the bare basics of the language! Hopefully you understand how Clojure works and how to write basic expressions in Clojure. Hopefully you also have a grasp on the different *types* in Clojure, and how the language is structured.
-
 
 ## References
 
