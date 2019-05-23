@@ -23,7 +23,7 @@
       [:li
        [:input {:type "text"
                 :value @todo-text
-                :on-change #(reset! todo-text (-> % .-target .-value))}]
+                :on-change #(reset! todo-text (.. % -target -value))}]
        [:button
         {:on-click
          (fn [] (add-todo! @todo-text)
