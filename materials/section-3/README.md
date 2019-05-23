@@ -17,12 +17,18 @@ Taken directly from the ClojureScript [website](https://clojurescript.org):
 
 > ClojureScript is a compiler for Clojure that targets JavaScript. It emits JavaScript code which is compatible with the advanced compilation mode of the Google Closure optimizing compiler.
 
-The Google Closure compiler allows for your ClojureScript code to be compiled into highly optimised JavaScript code. It (in it's own words) "compiles from JavaScript to better JavaScript".
+The Google Closure compiler allows for your ClojureScript code to be compiled into highly optimised JavaScript code. It (in it's own words) "compiles from JavaScript to better JavaScript". It also removes dead code.
 
 
 ### So, why not just use JavaScript?
 
 I think we can all agree here that JavaScript has _some_ shortcomings. Since JavaScript is quite a feature-rich language, there are many corners in which to hide bugs in your code. It requires extensive discipline from the JavaScript developers to ensure that the software written is bug-free. The amount of effort required to write robust code in JavaScript is vastly higher than to achieve the same feat in ClojureScript.
+
+The clear benefits of using ClojureScript:
+- The language is functional and dynamic LISP which guides you to create more functional code than JavaScript.
+- All datastructures are immutable. <3
+- If you are using a Clojure backend, the full stack nature adds up: combined build and development environment and possibilty to share source code between backend and frontend.
+- The build tool, Figwheel, handles everything from dependency management to local dev environment with hot code reload and production builds.
 
 ### What are the differences between Clojure and ClojureScript?
 
@@ -30,7 +36,7 @@ There are a few differences here (but actually surpsingly little on the whole), 
 
 - Data Structures
   - `nil` in ClojureScript corresponds to `null` and `undefined` in JavaScript, as opposed to just `null` in Java.
-  - Characters do not exist in Java, so a ClojureScript `\a` corresponds to the single letter string `"a"` in JavaScript
+  - Characters do not exist in JavaScript, so a ClojureScript `\a` corresponds to the single letter string `"a"` in JavaScript
 - Refs do not exist in ClojureScript (but we can just use Atoms instead, which work exactly the same as they do in Clojure)
 - ClojureScript only supports integer and floating point literals that can be mapped to JavaScript primitives.
   - Therefore, Ratio, BigDecimal & BigInteger do not exist in ClojureScript.
@@ -61,7 +67,9 @@ If we want to access properties of a JavaScript object, we can do so with the `.
 You can access nested properties using the `..` access syntax.
 
 ```clojure
-(.. js/foo -bar -baz) ;; JS output: foo.bar.baz;
+(fn [e]
+	(.. e -target -value))
+ ;; JS output: function(e) { return e.target.value; }
 ```
 
 We can create JavaScript objects in ClojureScript using the `js-obj` macro:
@@ -79,7 +87,7 @@ This only allows you to use basic data literals as values, though. Any ClojureSc
 This will correspond to
 
 ```javascript
-{ 
+{
   "a": [1, 2, 3],
   "b": ["wow", "what", "fun"]
 }
@@ -174,7 +182,7 @@ Create the application global state in atoms, e.g. a vector of maps containing t
     {:id 2 :name "Test it" :done false}]))
 ```
 
-Write a regaent component for rendering a single todo item. When you iterate over the vector, remember the `^{:key ...}` in the for comprehension.
+Write a Reagent component for rendering a single todo item. When you iterate over the vector, remember the `^{:key ...}` in the for comprehension.
 
 Write the rest of the components: adding a new todo item, toggling the done state, and removing a todo.
 
@@ -188,8 +196,25 @@ There's two libraries that provide HTTP calls on ClojureScript:
 - [cljs-ajax](https://github.com/JulianBirch/cljs-ajax) which offers a callback style interface
 - [cljs-http](https://github.com/r0man/cljs-http) which utilizes [core.async](https://github.com/clojure/core.async) channels and macros
 
-We wanted to keep things simple and not go through core.async, so we used cljs-ajax. Let's see how it works: https://github.com/JulianBirch/cljs-ajax
+We wanted to keep things simple and not go through core.async, so we used `cljs-ajax`. Let's see how it works: https://github.com/JulianBirch/cljs-ajax
+
+The `cljs-ajax` library takes care of `json` parsing. To handle the response formatting, use the following options:
+
+```clojure
+{:response-format :json
+ :keywords? true}
+```
+
+To handle the POST parameter formatting, give the parameters as a Clojure map and use the following option:
+
+```clojure
+{:format :json}
+```
 
 ---
 
 ## 6. Create the backend calls
+
+Use `cljs-ajax` to create the backend calls. The way to refactor your implementation would be:
+1. Instead of mutating the `todos` atom locally, make an Ajax call. Update the `todos` state atom in the handler function.
+2. When the page is loaded, fetch the current state. This could be called in the `core/mount-root` function.
