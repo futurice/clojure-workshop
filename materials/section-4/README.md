@@ -28,6 +28,7 @@ CREATE TABLE todo(
   done BOOL DEFAULT FALSE
 );
 ```
+There are a number of ways you can add the database. The easiest way is probably to download `psql` [download](https://www.postgresql.org/download/) and run the following command to connect to the database `psql -h localhost -p 5432 -u clojure_workshop_db`. After you've connected to the database, you can copy & paste the create table command above and run it.nd presto! You have created your database table
 
 Now that we've created a database and set up a table for our todos, we are finally ready to begin writing Clojure database code!
 
