@@ -38,7 +38,10 @@
       (let [power-of-2? (fn [id] (and
                                    (not (= id 0))
                                    (= (bit-and id (- id 1)) 0)))
-            idx (->> (fetch-todos! db-url) (filter (fn [todo] (power-of-2? (:id todo)))) (map :id))]
+            idx (->> db-url
+                    (fetch-todos!)
+                    (map :id)
+                    (filter power-of-2?))]
         (delete-todo-special! db-url {:idx idx})
         (r/response (fetch-todos! db-url)))))
   (route/not-found "Not Found"))
