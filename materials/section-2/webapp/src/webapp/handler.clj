@@ -48,9 +48,9 @@
       (reset! todos [])
       (r/response @todos))
     (DELETE "/todos/special" []
-      (letfn [(power-of-2? [id] (true? (and
-                                         (not (= id 0))
-                                         (= (bit-and id (- id 1)) 0))))]
+      (letfn [(power-of-2? [id] (and
+                                  (not (= id 0))
+                                  (= (bit-and id (- id 1)) 0)))]
         (reset! todos (filterv (fn [todo] (not (power-of-2? (:id todo)))) @todos))
         (r/response @todos))))
   (route/not-found "Not Found"))
