@@ -3,56 +3,44 @@
             [compojure.route :as route]
             [compojure.coercions :refer [as-int]]
             [ring.util.response :as r]
+            [hugsql.core :refer [def-db-fns]]
             [ring.middleware.params :as request-middleware]
             [ring.middleware.json :as json-middleware]
             [ring.middleware.cors :refer [wrap-cors]]))
 
-(def todos (atom []))
+(def db-url "postgresql://postgres@localhost:5432/clojure_workshop_db")
 
-(def id-counter (atom 0))
-
-(def conj-sort (comp (partial sort-by :id) conj))
-
-(defn- add-todo! [todo]
-  (swap! todos conj-sort todo))
-
-(defn- remove-todo! [id]
-  (reset! todos (remove (fn [todo] (= (:id todo) id)) @todos)))
-
-(defn- toggle-done! [id]
-  (when-let [todo (first (filter #(= (:id %) id) @todos))]
-    (remove-todo! id)
-    (add-todo! (assoc todo :done (-> todo :done not)))))
+(def-db-fns "webapp/queries.sql")
 
 (defroutes app-routes
   (context "/api" []
     (GET "/todos" [sortby]
-      (let [todos (sort-by :id @todos)]
+      (let [todos (sort-by :id (fetch-todos! db-url))]
         (if (= sortby "desc")
           (r/response (reverse todos))
           (r/response todos))))
     (POST "/todos" [name]
-      (add-todo! {:id (swap! id-counter inc) :name name :done false})
-      (r/response @todos))
+      (insert-todo! db-url {:name name})
+      (r/response (fetch-todos! db-url)))
     (PATCH "/todos/:id" [id :<< as-int]
-      (toggle-done! id)
-      (r/response @todos))
+      (update-todo! db-url {:id id})
+      (r/response (fetch-todos! db-url)))
     (DELETE "/todos/:id" [id :<< as-int]
-      (let [current-length (count @todos)]
-        (remove-todo! id)
+      (let [deleted-count (delete-todo! db-url {:id id})]
         ;; If lenghts are the same, nothing has been deleted
-        (if (= current-length (count @todos))
+        (if (= deleted-count 0)
           (r/status nil 400)
-          (r/response @todos))))
+          (r/response (fetch-todos! db-url)))))
     (DELETE "/todos/empty" []
-      (reset! todos [])
-      (r/response @todos))
+      (clear-todos! db-url)
+      (r/response (fetch-todos! db-url)))
     (DELETE "/todos/special" []
-      (letfn [(power-of-2? [id] (true? (and
-                                         (not (= id 0))
-                                         (= (bit-and id (- id 1)) 0))))]
-        (reset! todos (filterv (fn [todo] (not (power-of-2? (:id todo)))) @todos))
-        (r/response @todos))))
+      (let [power-of-2? (fn [id] (and
+                                   (not (= id 0))
+                                   (= (bit-and id (- id 1)) 0)))
+            idx (->> (fetch-todos! db-url) (filter (fn [todo] (power-of-2? (:id todo)))) (map :id))]
+        (delete-todo-special! db-url {:idx idx})
+        (r/response (fetch-todos! db-url)))))
   (route/not-found "Not Found"))
 
 (def app

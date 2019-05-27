@@ -5,6 +5,8 @@
   :dependencies [[org.clojure/clojure "1.10.0"]
                  [compojure "1.6.1"]
                  [ring/ring-json "0.4.0"]
+                 [org.postgresql/postgresql "42.2.2"]
+                 [com.layerware/hugsql "0.4.9"]
                  [ring-cors "0.1.13"]
                  [ring/ring-defaults "0.3.2"]]
   :plugins [[lein-ring "0.12.5"]]
