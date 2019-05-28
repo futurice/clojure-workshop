@@ -216,6 +216,19 @@ To handle the POST parameter formatting, give the parameters as a Clojure map an
 {:format :json}
 ```
 
+### CORS headers
+
+Before creating the frontend, add the CORS header middleware in the backend project:
+
+1. In `project.clj`, add the following dependency: `[ring-cors "0.1.13"]`
+2. In `handler.clj`, require: `[ring.middleware.cors :refer [wrap-cors]]`
+3. In `handler.clj`, use the following middleware (inside `def app`):
+
+```clojure
+(wrap-cors :access-control-allow-origin [#"http://localhost:3449"]
+           :access-control-allow-methods [:get :patch :post :delete])
+```
+
 ---
 
 ## 6. Create the backend calls
