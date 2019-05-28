@@ -9,7 +9,7 @@ Nightcode has an inbuilt REPL, just press the *run with REPL* button and you are
 
 A good way to try and solve the following koans would be to first try to find a viable solution with the help of the REPL and then in the source file.
 
-Some of the koans can be somewhat challenging. https://clojuredocs.org/ is a good source to find the most relevant and helpful functions to solve the koans.
+Some of the koans can be somewhat challenging. https://clojuredocs.org/ and the [Clojure Cheat Sheet](https://clojure.org/api/cheatsheet) are good sources to find the most relevant and helpful functions to solve the koans.
 
 If you're wondering how Clojure's STL functions work, the `doc` and `source` functions are a good way to peek at them
 
