@@ -2,12 +2,12 @@
 
 ### Contents
 
-1. Introduction to ClojureScript
-2. Introduction to Reagent
-3. Create a new Reagent project
-4. Create the views
-5. Introduction to Ajax on ClojureScript
-6. Create the backend calls
+1. [Introduction to ClojureScript](#1-introduction-to-clojurescript)
+2. [Introduction to Reagent](#2-introduction-to-reagent)
+3. [Create a new Reagent project](#3-create-a-new-reagent-project)
+4. [Create the views](#4-create-the-views)
+5. [Introduction to Ajax on ClojureScript](#5-introduction-to-ajax-on-clojurescript)
+6. [Create the backend calls](#6-create-the-backend-calls)
 
 ## 1. Introduction to ClojureScript
 
