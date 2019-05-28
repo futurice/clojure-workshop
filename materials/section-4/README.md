@@ -1,6 +1,6 @@
 # Database (Extra Credit)
 
-In this extra credit section we will add a database and integrate it with our app. Storing state in a atom is perfectly fine if you don't want to have persistent data, otherwise you probably need a datastore or database. We will be using _postgres_ as our database. We won't be talking about specific databases in this section, only how you integrate with them (in this case postgres).
+In this extra credit section we will add a database and integrate it with our app. Storing state in a atom is perfectly fine if you don't want to have persistent data, otherwise you would probably need a datastore or database. We will be using _postgres_ as our database. We won't be talking about specific databases in this section, only how you integrate with them (in this case postgres).
 
 ### Prerequisite
 
@@ -22,7 +22,7 @@ On the last line we copy a sql file (create_table.sql) into our container. This 
 CREATE TABLE todo(
   id serial PRIMARY KEY NOT NULL,
   name varchar(50) NOT NULL,
-  done BOOL DEFAULT FALSE
+  done bool DEFAULT FALSE
 );
 ```
 
