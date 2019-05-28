@@ -43,8 +43,9 @@ There are a few differences here (but actually surpsingly little on the whole), 
   - Equality on numbers works as it does in JavaScript, and not in Clojure.
     - `(= 1.0 1) => true` in ClojureScript, but not in Clojure!
 
+For a quick reference of functions available in ClojureScript code, check the [ClojureScript cheat sheet](https://cljs.info/cheatsheet/).
 
-### Interop between ClojureScript <-> JavaScript
+### Interop between ClojureScript and JavaScript
 
 ClojureScript defines a namespace called `js` that allows us to access JavaScript objects, functions and primitives defined in the global scope.
 
@@ -57,8 +58,10 @@ If we want to invoke JavaScript functions, we can do so by prefixing the functio
 ```clojure
 (.getElementById js/document "my-element")
 ```
-n
-If we want to access properties of a JavaScript object, we can do so with the `.-` property access syntax.
+
+ClojureScript data structures (set, vector, list, keyword, symbol and map) need to be converted in order to use them in JavaScript. The same applies also vice versa.
+
+You can also access properties of a JavaScript object directly from ClojureScript with the `.-` property access syntax.
 
 ```clojure
 (.-bar js/foo) ;; JS output: foo.bar;
@@ -127,6 +130,8 @@ Start it
 	$ lein figwheel
 
 Now you have an independent ClojureScript & Reagent frontend running on a Figwheel development server and a *ClojureScript* REPL.
+
+The REPL is connected to your browser and you can directly require namespaces, call functions and even change atom values in the REPL.
 
 ### Application structure
 
