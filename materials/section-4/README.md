@@ -6,31 +6,29 @@ In this extra credit section we will add a database and integrate it with our ap
 
 For this section, you will need docker installed on your machine. Follow [this](https://runnable.com/docker/getting-started/) guide to get started with docker. We won't be discussing docker in any great detail in this section, as this section only explains how to integrate with a database.
 
-Once you have docker installed create a `Dockerfile` inside the `section-2` folder. The `Dockerfile` should look like this:
+### Setup
+
+Once you have docker installed, create a `Dockerfile` inside the `section-2` folder. The `Dockerfile` should look like this:
 
 ```
 FROM postgres:10
 ENV POSTGRES_DB clojure_workshop_db
+ADD create_table.sql /docker-entrypoint-initdb.d/
 ```
 
-Next, we will build and run our database
-run `docker build -t clojure_workshop_db .` to build the docker image of our database. Next, run `docker run -p 5432:5432 clojure_workshop_db`.
-Now you should have a database up and running!
+On the last line we copy a sql file (create_table.sql) into our container. This file will create our database table. The file should look like this:
 
-### Setup
-
-Before we begin refactoring our app, we need to setup our database tables. In this case we only need one. Add the following table to your database:
-
-```
+```sql
 CREATE TABLE todo(
   id serial PRIMARY KEY NOT NULL,
   name varchar(50) NOT NULL,
   done BOOL DEFAULT FALSE
 );
 ```
-There are a number of ways you can add the database. The easiest way is probably to download `psql` [download](https://www.postgresql.org/download/) and run the following command to connect to the database `psql -h localhost -p 5432 -u clojure_workshop_db`. After you've connected to the database, you can copy & paste the create table command above and run it.nd presto! You have created your database table
 
-Now that we've created a database and set up a table for our todos, we are finally ready to begin writing Clojure database code!
+Next, we will build and run our database.
+Run `docker build -t clojure_workshop_db .` to build the docker image of our database. Next, run `docker run -p 5432:5432 clojure_workshop_db`.
+Now you should have a database up and running!
 
 ### HugSQL & Postgres
 
