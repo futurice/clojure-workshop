@@ -22,12 +22,14 @@
 
  ["12_lazy_sequences"]
 
- ["13_recursion"]
+ ["13_threading"]
 
- ["14_creating_functions"]
+ ["14_recursion"]
 
- ["15_destructuring"]
+ ["15_creating_functions"]
 
- ["16_runtime_polymorphism"]
+ ["16_destructuring"]
 
- ["17_refs"]]
+ ["17_runtime_polymorphism"]
+
+ ["18_refs"]]
