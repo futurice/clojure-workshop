@@ -145,14 +145,14 @@ Don't worry about `def` just yet, we'll get into that one later on. As you can s
 
 ## Reader
 
-The reader is a unique feature of Clojure. You could call it an extra build step. This step is taken before the source code get's compiled.
+The reader is a unique feature of Clojure. You could call it an extra build step. This step is taken before the source code gets compiled.
 Clojure has two steps of compilation in a sense, first the reader will turn your Clojure code into Clojure data structures, and then the compiler will turn the data structures into Java byte code. You can actually test the reader with Clojure's `read-string` function.
 
 ```clojure
 (read-string "(+ 1 2 3)") ;; => (+ 1 2 3)
 ```
 
-Why is this useful? Well, in Clojure the evaluation and reading (parsing) of the code is completely separate. This is an essential part in Clojure. The reader allows us to change how the code behaves, or even what the code looks like. This is done with the help of *macros*. In the above example we see a straightforward relationship between the reader and the data structure it produces. However, as mentioned, we can manipulate the data structure with the help of *reader macros*.
+Why is this useful? Well, in Clojure the compilation and reading (parsing) of the code are completely separate. This is an essential part in Clojure. The reader allows us to change how the code behaves, or even what the code looks like. This is done with the help of *macros*. In the above example we see a straightforward relationship between the reader and the data structure it produces. However, as mentioned, we can manipulate the data structure with the help of *reader macros*.
 
 ```clojure
 (read-string "'(a b c)") ;; => (quote (a b c))
@@ -162,7 +162,7 @@ Clojure offers a handful of *reader macros*. To get a full understanding on how 
 
 ## Macros
 
-Macros are one of the features that make Clojure amazing! Macros are quite special. Unlike normal functions, marcos are placed between the reader and evaluator in the Clojure lifecycle, and unlike functions, macros are created with the `defmacro` function. What this means, is that with macros we can manipulate unevaluated (yielded) data structures. We can essentially create new code and change existing code.
+Macros are one of the features that make Clojure amazing! Macros are quite special. Unlike normal functions, marcos are placed between the reader and compiler in the Clojure lifecycle, and unlike functions, macros are created with the `defmacro` special form. What this means, is that with macros we can manipulate unevaluated (yielded) data structures. We can essentially create new code and change existing code.
 
 Practical example:
 
@@ -213,9 +213,10 @@ a symbol naming a class or a Class object that indicates the Java type of the ob
   metadata-var
   "World") ;; => #'user/metadata-var
 
-(some-empty-var) ;; => "Unbound: #'user/some-empty-var"
-(some-var) ;; => "Hello"
-(metadata-var) ;; => "World"
+;; Vars don't need parenthesis. They always point to their respective value
+some-empty-var ;; => "Unbound: #'user/some-empty-var"
+some-var ;; => "Hello"
+metadata-var ;; => "World"
 ```
 
 #### fn
@@ -247,6 +248,8 @@ There is also a shorthand for this.
 (defn some-fn [value] (println value)) ;; => #'user/some-fn
 (some-fn "Functions!") ;; => "Functions!"
 ```
+
+As we learned earlier, everything after the function position is interpreted as arguments for the function.
 
 #### let
 
