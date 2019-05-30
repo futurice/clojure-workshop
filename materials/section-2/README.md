@@ -20,7 +20,8 @@ Breakdown:
 
 ## Ring
 
-As mentioned already, Ring is a library for building web applications. It is arguably the de facto choice for writing web applications in Clojure. Ring is very lightweight, it only consists of four parts:
+As mentioned already, Ring is a library for building web applications. It is arguably the de facto choice for writing web applications in Clojure. Ring lets us write web apps with simple Clojure functions and maps, it also comes equipped with a auto-reloading development server.
+Ring is very lightweight, it only consists of four parts:
 
 - Handlers
 - Requests
@@ -125,7 +126,20 @@ Small breakdown:
             [ring.middleware.defaults :refer [wrap-defaults site-defaults]]))
 ```
 
-Our namespace is defined, and we include the Compojure core, the route namespace along with the middleware namespace from Ring. It also requires the middleware namespace from Ring. Middlewares, as mentioned before, are just an easy way to handle requests before they reach your route handler. Ring has a few default ones which are used in the Compojure template.
+Our namespace is defined with the *ns* macro which also allows us to import other namespaces into our current namespace.
+
+```clojure
+(:require [compojure.core :refer :all])
+```
+
+`:require` takes an *n* amount of vectors as arguments. The first value inside each vector should be a new unique namespace name.
+You can also define, with special keywords, which part of a namespace you want to include.
+
+- `:refer :all` -> Give me everything
+- `:as` -> Use namespace with a different name
+- `:refer [wrap-defaults site-defaults]` -> Only require `wrap-defaults` and `site-defaults` from the namespace.
+
+In our project, we include Compojure core, the Compojure route namespace, along with the middleware namespace from Ring. Middlewares, as mentioned before, are just an easy way to handle requests before they reach your route handler. Ring has a few default ones which are used in the Compojure template.
 
 ```clojure
 (defroutes app-routes
@@ -137,7 +151,7 @@ Our namespace is defined, and we include the Compojure core, the route namespace
 All of these route handlers work in the same way. Each of them take a path as the first argument, a request body, and a route body as the last argument.
 
 ```clojure
-(GET "/home" request (str "Welcome Home " ((:params request) "person")  "!"))
+(GET "/home" request (str "Welcome Home " (:person (:params request))  "!"))
   ^     ^       ^                      ^
 method route  request                 body
 ```
