@@ -22,13 +22,33 @@ The Google Closure compiler allows for your ClojureScript code to be compiled in
 
 ### So, why not just use JavaScript?
 
-I think we can all agree here that JavaScript has _some_ shortcomings. Since JavaScript is quite a feature-rich language, there are many corners in which to hide bugs in your code. It requires extensive discipline from the JavaScript developers to ensure that the software written is bug-free. The amount of effort required to write robust code in JavaScript is vastly higher than to achieve the same feat in ClojureScript.
+Unsurprisingly, the vast majority of the benefits of using Clojure also apply to using ClojureScript. So, you get all the parts of using a functional lisp dialect with immutable-by-default data structures. There's also some great tooling specific to ClojureScript that provides additional help to the developer experience. One such tool is [Figwheel](https://github.com/bhauman/lein-figwheel), which handles your build-related tasks such as hot code reloading, dependency management, loval dev environment management, and even provides you with a REPL that hooks directly into your running application (which is _awesome_).
 
-The clear benefits of using ClojureScript:
-- The language is functional and dynamic LISP which guides you to create more functional code than JavaScript.
-- All datastructures are immutable. <3
-- If you are using a Clojure backend, the full stack nature adds up: combined build and development environment and possibilty to share source code between backend and frontend.
-- The build tool, Figwheel, handles everything from dependency management to local dev environment with hot code reload and production builds.
+One additional benefit that isn't to be underestimated is using a single language across the full stack. One particularly nice part of this (which sadly we won't be utilising within this workshop) is the concept of [Reader Conditionals](https://clojure.org/reference/reader#_reader_conditionals). This allows you to define `cljc` files in your project that work with both Clojure _and_ ClojureScript. For example, here's a basic project structure of a full-stack Clojure(Script) application:
+
+```
+src
+├── clj
+│   └── <name>
+│       ├── core.clj
+│       ├── handler.clj
+│       ├── profiles.clj
+│       └── server.clj
+├── cljs
+│   └── <name>
+│       ├── core.cljs
+│       ├── db.cljs
+│       ├── events.cljs
+│       ├── routes.cljs
+│       ├── subs.cljs
+│       └── views.cljs
+└── cljc
+    └── <name>
+        ├── utils.cljc
+        └── other.cljc
+```
+
+Here, everything defined in `utils.cljc` and `other.cljc` can be refereced in our `clj` and `cljs` files. This makes it possible to create libraries that target both Clojure and ClojureScript!
 
 ### What are the differences between Clojure and ClojureScript?
 
@@ -47,7 +67,7 @@ For a quick reference of functions available in ClojureScript code, check the [C
 
 ### Interop between ClojureScript and JavaScript
 
-ClojureScript defines a namespace called `js` that allows us to access JavaScript objects, functions and primitives defined in the global scope.
+When working in ClojureScript, we are often working with ClojureScript's own data structures alongside native JavaScript data structures. So naturally, we are often going to be performing operations that allow us to convert JavaScript objects and primitives to ClojureScript, and vice-versa. The following functions and macros allow us to do this easily. To help us with this, ClojureScript defines a namespace called `js` that allows us to access JavaScript objects, functions and primitives defined in the global scope.
 
 ```clojure
 (def text js/globalName)
