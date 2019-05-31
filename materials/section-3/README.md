@@ -24,7 +24,7 @@ The Google Closure compiler allows for your ClojureScript code to be compiled in
 
 Unsurprisingly, the vast majority of the benefits of using Clojure also apply to using ClojureScript. So, you get all the parts of using a functional lisp dialect with immutable-by-default data structures. There's also some great tooling specific to ClojureScript that provides additional help to the developer experience. One such tool is [Figwheel](https://github.com/bhauman/lein-figwheel), which handles your build-related tasks such as hot code reloading, dependency management, loval dev environment management, and even provides you with a REPL that hooks directly into your running application (which is _awesome_).
 
-One additional benefit that isn't to be underestimated is using a single langauge across the full stack. One particularly nice part of this (which sadly we won't be utilising within this workshop) is the concept of [Reader Conditionals](https://clojure.org/reference/reader#_reader_conditionals). This allows you to define `cljc` files in your project that work with both Clojure _and_ ClojureScript. For example, here's a basic project structure of a full-stack Clojure(Script) application:
+One additional benefit that isn't to be underestimated is using a single language across the full stack. One particularly nice part of this (which sadly we won't be utilising within this workshop) is the concept of [Reader Conditionals](https://clojure.org/reference/reader#_reader_conditionals). This allows you to define `cljc` files in your project that work with both Clojure _and_ ClojureScript. For example, here's a basic project structure of a full-stack Clojure(Script) application:
 
 ```
 src
