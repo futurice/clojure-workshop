@@ -1,11 +1,11 @@
-(ns koans.12-sequence-comprehensions
+(ns koans.11-sequence-comprehensions
   (:require [koan-engine.core :refer :all]))
 
 (meditations
- ;; "Sequence comprehensions can bind each element in turn to a symbol"
- ;; (= __
- ;;    (for [x (range 6)]
- ;;      x))
+ "Sequence comprehensions can bind each element in turn to a symbol"
+ (= __
+    (for [x (range 6)]
+      x))
 
  ;; "They can easily emulate mapping"
  ;; (= '(0 1 4 9 16 25)

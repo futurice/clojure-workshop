@@ -1,4 +1,4 @@
-(ns koans.13-creating-functions
+(ns koans.15-creating-functions
   (:require [koan-engine.core :refer :all]))
 
 (defn square [x] (* x x))

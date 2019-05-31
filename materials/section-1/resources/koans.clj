@@ -16,18 +16,20 @@
 
  ["09_higher_order_functions"]
 
- ["10_runtime_polymorphism"]
+ ["10_atoms"]
 
- ["11_lazy_sequences"]
+ ["11_sequence_comprehensions"]
 
- ["12_sequence_comprehensions"]
+ ["12_lazy_sequences"]
 
- ["13_creating_functions"]
+ ["13_threading"]
 
  ["14_recursion"]
 
- ["15_destructuring"]
+ ["15_creating_functions"]
 
- ["16_refs"]
+ ["16_destructuring"]
 
- ["17_atoms"]]
+ ["17_runtime_polymorphism"]
+
+ ["18_refs"]]

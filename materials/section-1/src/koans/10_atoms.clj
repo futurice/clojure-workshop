@@ -1,4 +1,4 @@
-(ns koans.17-atoms
+(ns koans.10-atoms
   (:require [koan-engine.core :refer :all]))
 
 (def atomic-clock (atom 0))
