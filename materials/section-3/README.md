@@ -126,6 +126,12 @@ As you can see above, we can add a flag to automatically keywordise the JavaScri
 
 If you'd like to read a little more in depth, I'd recommend turning to [this blog post](https://www.spacjer.com/blog/2014/09/12/clojurescript-javascript-interop/) which provides a great rundown of additional ways you can interact with JS from ClojureScript, and vice-versa.
 
+### Using JavaScript dependencies
+
+To use JavaScript dependencies, you can use either [CLJSJS](http://cljsjs.github.io/) or [shadow-cljs](https://github.com/thheller/shadow-cljs). CLJSJS contains JavaScript libraries that are packaged as ClojureScript modules.
+
+Shadow-cljs is an alternative tool to compile ClojureScript and manage the dependencies. It requires NPM, Node and Java SDK. It can target browser, node, npm-module, react-native and chrome-extension. In addition to *seamless npm integration*, it offers fast builds, caching, live reload (CLJS + CSS), CLJS REPL and code splitting.
+
 ---
 
 ## 2. Introduction to Reagent
