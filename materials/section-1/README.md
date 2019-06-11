@@ -36,6 +36,16 @@ clojure.core/+
      (reduce1 + (+ x y) more)))
 ```
 
+### Nightcode
+
+Nightcode is a lightweight Clojure editor designed primarily for teaching. Nightcode is optional for this workshop. But it already comes equipped with [parinfer](https://github.com/shaunlebron/parinfer) which is a handy plugin that makes writing Clojure a cinch.
+
+Example of parinfer:
+
+![Example](https://camo.githubusercontent.com/142ec87e9c4ab1863c3dc4c26807f6bca4ef3f5b/687474703a2f2f7a697070792e6766796361742e636f6d2f57656972644f6464426c756566696e74756e612e676966)
+
+Parinfer will automatically add parenthesis and brackets for you. All you have to do is worry about indentation.
+
 ### Running the Koans
 
 To run the koans, simply run:

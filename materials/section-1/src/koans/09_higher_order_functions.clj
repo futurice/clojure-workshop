@@ -5,11 +5,11 @@
  "The map function relates a sequence to another"
  (= [__ __ __] (map (fn [x] (* 4 x)) [1 2 3]))
 
- ;; "You may create that mapping"
- ;; (= [1 4 9 16 25] (map (fn [x] __) [1 2 3 4 5]))
+ "You may create that mapping"
+ (= [1 4 9 16 25] (map (fn [x] __) [1 2 3 4 5]))
 
- ;; "Or use the names of existing functions"
- ;; (= __ (map nil? [:a :b nil :c :d]))
+ "Or use the names of existing functions"
+ (= __ (map nil? [:a :b nil :c :d]))
 
  "A filter can be strong"
  (= __ (filter (fn [x] false) '(:anything :goes :here)))
@@ -29,8 +29,7 @@
  "You can start somewhere else"
  (= 2400 (reduce (fn [a b] (* a b)) __ [1 2 3 4]))
 
- ;; "Numbers are not the only things one can reduce"
- ;; (= "longest" (reduce (fn [a b]
- ;;                        (if (< __ __) b a))
- ;;                      ["which" "word" "is" "longest"]))
- )
+ "Numbers are not the only things one can reduce"
+ (= "longest" (reduce (fn [a b]
+                        (if (< __ __) b a))
+                      ["which" "word" "is" "longest"])))

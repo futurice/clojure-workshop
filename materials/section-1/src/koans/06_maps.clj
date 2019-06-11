@@ -5,11 +5,11 @@
  "Don't get lost when creating a map"
  (= {:a 1 :b 2} (hash-map :a 1 __ __))
 
- ;; "A value must be supplied for each key"
- ;; (= {:a 1} (hash-map :a __))
+ "A value must be supplied for each key"
+ (= {:a 1} (hash-map :a __))
 
- ;; "The size is the number of entries"
- ;; (= __ (count {:a 1 :b 2}))
+ "The size is the number of entries"
+ (= __ (count {:a 1 :b 2}))
 
  "You can look up the value for a given key"
  (= __ (get {:a 1 :b 2} :b))
@@ -38,27 +38,26 @@
  "Maps are immutable, but you can create a new and improved version"
  (= {1 "January" 2 __} (assoc {1 "January"} 2 "February"))
 
- ;; "You can also create a new version with an entry removed"
- ;; (= {__ __} (dissoc {1 "January" 2 "February"} 2))
+ "You can also create a new version with an entry removed"
+ (= {__ __} (dissoc {1 "January" 2 "February"} 2))
 
  "Create a new map by merging"
  (= {:a 1 :b 2 __ __} (merge {:a 1 :b 2} {:c 3}))
 
- ;; "Specify how to handle entries with same keys when merging"
- ;; (= {:a 1 :b __ :c 3} (merge-with + {:a 1 :b 1} {:b 1 :c 3}))
+ "Specify how to handle entries with same keys when merging"
+ (= {:a 1 :b __ :c 3} (merge-with + {:a 1 :b 1} {:b 1 :c 3}))
 
- ;; "Often you will need to get the keys, but the order is undependable"
- ;; (= (list __ __ __)
- ;;    (sort (keys { 2014 "Sochi" 2018 "PyeongChang" 2010 "Vancouver"})))
+ "Often you will need to get the keys, but the order is undependable"
+ (= (list __ __ __)
+    (sort (keys { 2014 "Sochi" 2018 "PyeongChang" 2010 "Vancouver"})))
 
- ;; "You can get the values in a similar way"
- ;; (= (list __ __ __)
- ;;    (sort (vals {2010 "Vancouver" 2014 "Sochi" 2018 "PyeongChang"})))
+ "You can get the values in a similar way"
+ (= (list __ __ __)
+    (sort (vals {2010 "Vancouver" 2014 "Sochi" 2018 "PyeongChang"})))
 
- ;; "You can even iterate over the map entries as a seq"
- ;; (= {:a __ :b __}
- ;;    (into {}
- ;;          (map
- ;;           (fn [[k v]] [k (inc v)])
- ;;           {:a 1 :b 2})))
- )
+ "You can even iterate over the map entries as a seq"
+ (= {:a __ :b __}
+    (into {}
+          (map
+           (fn [[k v]] [k (inc v)])
+           {:a 1 :b 2}))))

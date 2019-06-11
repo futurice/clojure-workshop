@@ -22,10 +22,10 @@
  (= __ (if (nil? 0)
          [:a :b :c]))
 
- ;; "In others your alternative may be interesting"
- ;; (= :glory (if (not (empty? ()))
- ;;             :doom
- ;;             __))
+ "In others your alternative may be interesting"
+ (= :glory (if (not (empty? ()))
+             :doom
+             __))
 
  "You may have a multitude of possible paths"
  (let [x 5]
@@ -33,16 +33,16 @@
                        (= x __) :another-road-not-taken
                        :else __)))
 
- ;; "Or your fate may be sealed"
- ;; (= 'doom (if-not (zero? __)
- ;;            'doom
- ;;            'more-doom))
+ "Or your fate may be sealed"
+ (= 'doom (if-not (zero? __)
+            'doom
+            'more-doom))
 
  "In case of emergency, go fast"
  (= "pretty fast"
     (explain-exercise-velocity __))
 
- ;; "But admit it when you don't know what to do"
- ;; (= __
- ;;    (explain-exercise-velocity :watching-tv))
+ "But admit it when you don't know what to do"
+ (= __
+    (explain-exercise-velocity :watching-tv))
  )
