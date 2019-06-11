@@ -265,7 +265,10 @@ _The TODOs should be stored inside an_ `atom`. The REST API should also provide 
 
 1. `GET` Should list all available TODOs.
 2. `POST` Should add a single TODO.
-3. `DELETE` Should delete a TODO, and finally one endpoint.
+*Tips* this endpoint doesn't need to take anything else than a name query parameter.
+If you want to send a json body instead, you need to add an extra middleware, `wrap-json-params`. This middleware is included in the `ring.middleware.json` namespace.
+
+3. `DELETE` Should delete a TODO.
 4. `PATCH` Should update a single TODO - mark as _done_.
 
 A TODO could look something like this:
@@ -276,6 +279,12 @@ A TODO could look something like this:
   {:id 1
    :name "Wash the dishes"
    :done false})
+```
+
+And the list should look like this:
+
+```clojure
+(def todos (atom []))
 ```
 
 Extra credit:
