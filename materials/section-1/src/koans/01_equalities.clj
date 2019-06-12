@@ -2,14 +2,15 @@
   (:require [koan-engine.core :refer :all]))
 
 (meditations
- ;; "We shall contemplate truth by testing reality, via equality"
- ;; (= __ true)
+ "We shall contemplate truth by testing reality, via equality"
+ (= __ true)
 
  "To understand reality, we must compare our expectations against reality"
  (= __ (+ 1 1))
 
- ;; "You can test equality of many things"
- ;; (= (+ 3 4) 7 (+ 2 __))
+ ;; Optional
+ "You can test equality of many things"
+ (= (+ 3 4) 7 (+ 2 __))
 
  "Some things may appear different, but be the same"
  (= __ (= 2 2/1))
@@ -32,9 +33,8 @@
  "Symbolism is all around us"
  (= 'hello (symbol __))
 
- ;; "What could be equivalent to nothing?"
- ;; (= __ nil)
+ "What could be equivalent to nothing?"
+ (= __ nil)
 
- ;; "When things cannot be equal, they must be different"
- ;; (not= :fill-in-the-blank __)
- )
+ "When things cannot be equal, they must be different"
+ (not= :fill-in-the-blank __))

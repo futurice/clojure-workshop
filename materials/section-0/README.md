@@ -22,14 +22,15 @@ https://www.youtube.com/watch?v=34_L7t7fD_U&t=745s
 
 1. [Syntax](#syntax)
 2. [Types](#types)
-3. [Reader](#reader)
-4. [Macros](#macros)
-5. [Special Forms](#special-forms)
-6. [References](#references)
+3. [Special Forms](#special-forms)
+4. [Examples](#examples)
+5. [Reader](#reader)
+6. [Macros](#macros)
+7. [References](#references)
 
 ## Syntax
 
-The syntax, or structure of the language is quite different from what you might be used to. Clojure is written as lists, or *forms*. The form is written as a pair of parenthesis, `()` which is also how you represent a list in Clojure. When you write a basic expression in Clojure, the first thing you will write is a pair of parenthesis, the first thing you write inside the parenthesis will *always be interpreted as a function to call*. The first position inside the parenthesis is called the function position. Anything after that, is interpreted as an argument(s) for the function you are calling. Any Clojure type that implements the `IFn` interface can be placed in the function position. This includes: `keyword`, `vector`, `map`, `set` and of course *functions* themselves, and last but not least, *macros* can also be placed in the function position.
+The syntax, or structure of the language is quite different from what you might be used to. Clojure is written as lists, or *forms*. The form is written as a pair of parenthesis, `()` which is also how you represent a list in Clojure. When you write a basic expression in Clojure, the first thing you will write is a pair of parenthesis, the first thing you write inside the parenthesis will *always be interpreted as a function to call*. The first position inside the parenthesis is called the function position. Anything after that, is interpreted as an argument(s) for the function you are calling. Any Clojure type that implements the `IFn` interface can be placed in the function position. This includes: `keyword`, `vector`, `map`, `set` and of course *functions* and *macros* can also be placed in the function position, and last but not least *special forms* can also be placed in the function position.
 
 ![Structure](structure.png)
 
@@ -105,7 +106,7 @@ As with numbers and strings, booleans are also plain old Java objects.
 ```
 
 Clojure has four fundamental *collection* types, `list`, `vector`, `set` and `map`. Again, these are all plain old Java objects, just like everything else so far. Difference between `list` and `vector` is that `list` is a Java `LinkedList` while `vector` is a Java `ArrayList`. `Set` is a list of unique values. And `map` is a basic *key value pair* data structure.
-All of these types implement the `ISeq` interface. This enables you to use all of the Clojure STL sequence functions (map, reduce, filter, etc) on these types. Something you might have noticed is that quotation mark in front of the `list`. You might also remember that the first thing inside parenthesis is always interpreted as a function to call, while still true the case for `list` is unique. The quotation mark is what is known as a *special form*. It yields the evaluation of the expression and returns a `list` of unevaluated values instead of interpreting it as a function and arguments.
+All of these types are sequential, meaning that they can all be cast into sequences. List is the only type that is naturally a sequence as it implements the Java `ISeq` interface. Sequences allows you to use all of the Clojure STL sequence functions (map, reduce, filter, etc) on these types. Something you might have noticed is that quotation mark in front of the `list`. You might also remember that the first thing inside parenthesis is always interpreted as a function to call, while still true the case for `list` is unique. The quotation mark is what is known as a *special form*. It yields the evaluation of the expression and returns a `list` of unevaluated values instead of interpreting it as a function and arguments.
 
 #### Keywords
 
@@ -142,44 +143,6 @@ The `@` is just a macro for deref, will get into macros later on. Clojure provid
 ```
 
 Don't worry about `def` just yet, we'll get into that one later on. As you can see in the examples above, `reset!` works a little bit differently than `swap!`. `swap!` will take an atom as the first argument and a function that will apply a change on the atom. `swap!` also takes an optional third argument, this argument would be an argument that would be passed to the applying function: `(swap! a-list conj :a-value) ;; => '(:a-value)` *note* `swap!` returns nil, the arrow, in this example, indicates the new mutated version. `reset!` only takes two arguments, an atom and a new value. An interesting thing you might have noticed is the use of the exclamation mark. This is a convention in lisp languages. The exclamation mark indicates that their is a side-effect made by the function. When you see the exclamation mark, most likely, an atom has been changed.
-
-## Reader
-
-The reader is a unique feature of Clojure. You could call it an extra build step. This step is taken before the source code gets compiled.
-Clojure has two steps of compilation in a sense, first the reader will turn your Clojure code into Clojure data structures, and then the compiler will turn the data structures into Java byte code. You can actually test the reader with Clojure's `read-string` function.
-
-```clojure
-(read-string "(+ 1 2 3)") ;; => (+ 1 2 3)
-```
-
-Why is this useful? Well, in Clojure the compilation and reading (parsing) of the code are completely separate. This is an essential part in Clojure. The reader allows us to change how the code behaves, or even what the code looks like. This is done with the help of *macros*. In the above example we see a straightforward relationship between the reader and the data structure it produces. However, as mentioned, we can manipulate the data structure with the help of *reader macros*.
-
-```clojure
-(read-string "'(a b c)") ;; => (quote (a b c))
-```
-Above we see an example of a *reader macro*. `'` is the *quote* macro. The *quote* macro yields unevaluated Clojure expression.
-Clojure offers a handful of *reader macros*. To get a full understanding on how the reader works and how to reader macros work, you can read everything about the reader here: https://clojure.org/reference/reader
-
-## Macros
-
-Macros are one of the features that make Clojure amazing! Macros are quite special. Unlike normal functions, marcos are placed between the reader and compiler in the Clojure lifecycle, and unlike functions, macros are created with the `defmacro` special form. What this means, is that with macros we can manipulate unevaluated (yielded) data structures. We can essentially create new code and change existing code.
-
-Practical example:
-
-```clojure
-(defmacro macro-fn [form]
-  (drop-last form))
-
-(macro-fn (+ 2 nil)) ;; => 2
-
-(defn normal-fn [form]
-  (drop-last form))
-
-(normal-fn (+ 2 nil)) ;; => java.lang.NullPointerException
-```
-
-Why does this happen? Clojure syntax is evaluated from the inside out, except in macros and special forms. Macros get passed unevaluated expressions, that's why we can manipulate the unevaluated expression however we wish. In the case of a function, the inner most expression will always get evaluated first, and the result of that expression will get passed to the function body. In the example above the inner most expression resulted in a `NullPointerException`.
-
 
 ## Special Forms
 
@@ -274,7 +237,134 @@ A `let` can easily be used in conjunction with `defn`
 (fn-with-locals 5) ;; => 1 2 7
 ```
 
-And that's it! We covered the bare basics of the language! Hopefully you understand how Clojure works and how to write basic expressions in Clojure. Hopefully you also have a grasp on the different *types* in Clojure, and how the language is structured.
+As mentioned above, these are the most common *special forms*. There are of course a lot more. There is a link to all special forms in the reference section of this page. Up next is examples.
+
+## Examples
+
+Next we will be looking at very common functions, and we'll also be breaking them down to understand thoroughly how they work.
+
+### Plus
+
+```clojure
+(+ 1 2) ;; => 3
+(+ 1) ;; => 1
+(+) ;; => 0
+(+ 2 2 2 2 2) ;; => 10
+```
+
+The plus `+` function takes 0 to infinite amount of numbers as arguments and sums them.
+
+All arithmetic functions (- * / +) work the same way. They all take between 0 or 1 to infinite amount of arguments, and performs their respective arithmetic operation on the given arguments.
+
+### Keyword
+
+```clojure
+(:name {:name "Sam"}) ;; => "Sam"
+(:name {:id 5 :balance 500}) ;; => nil
+(:name {:id 10 :balance 300} "Simon") ;; => "Simon"
+(:name #{:name :age :balance}) ;; => :name
+```
+
+Keywords work as functions also. Keywords as functions work by finding themselves from a given collection. If the collection does not contain the given keyword, the function will return nil. Keywords can be given an extra *default* value argument. In case the keyword could not be found from the given collection the *default* value would be returned instead.
+
+### Equality & Comparison & Predicate
+
+```clojure
+(= 1 1) ;; => true
+(= "1" 1) ;; => false
+(= [1 2] [1 2]) ;; => true
+(= '("Milo" "Tonny" "Franke") '("Peter" "Glenn" "Joe")) ;; => false
+(= nil false) ;; => false
+(not (= 1 2)) ;; => true
+(not= 1 2) ;; => true
+(= 1 1 1 1 1) ;; => true
+(= 2 2 2 2 1) ;; => false
+(= {:user {:name "Peter"}} {:user {:name "Peter"}}) ;; => true
+```
+
+The equals function takes 1 to an infinite amount of arguments and compares them all. If all arguments are *exactly* the same, the function will return true, otherwise false. The equals function will always return a boolean. The not function will return the exact opposite of what equals will return.
+
+```clojure
+(> 1 2) ;; => false
+(< 1 2) ;; => true
+(>= 10 10 9) ;; => true
+(<= 5 6 7) ;; => true
+```
+
+The comparison functions all work in the same way. Each of them take 1 to an infinite amount of arguments. Comparison functions always checks numbers in pairs. If a comparison function is given e.g the arguments `1 2 3` the first comparison would be between `1 2` and the second one between `2 3`. The will continue until there are no more arguments to compare. If all comparisons returned true then the function itself will return true, otherwise false.
+
+ ```clojure
+(even? 2) ;; => true
+(odd? 2) ;; => false
+(number? "1")  ;; => false
+(vector? '()) ;; => false
+(seq? {}) ;; => false
+(empty? []) ;; => true
+(some? nil) ;; => false
+(nil? nil) ;; => true
+```
+
+Clojure has a handful of predicate functions. Predicate functions are functions that will check if the given argument matches the predicate functions comparison clause. If the argument is a match, the functions will return true, otherwise false. One thing to keep in mind is that predicate functions always return a boolean as a result. Predicate functions can easily be identifiable by the question mark notation. Question marks at the end of functions should, in general, be considered predicate functions.
+
+
+### Sequence & Collection functions
+
+```clojure
+(map inc [1 2 3]) ;; => '(2 3 4)
+(filter odd? '(2 2 2 5 9 1 2 2) ;; => '(5 9 1)
+(reduce + [10 10 10 10 10]) ;; => 50
+(map :name [{:name "Sam" :age 22} {:name "Simon" :age 55}]) ;; => '("Sam" "Simon")
+(map + [12 34 5] '(2 3 4) #{1 2 11}) ;; => '(15 39 20)
+(map first {:name "Homer J, Simpson" :age 39 :title "Junior Vice President"}) ;; => '(:name :age :title)
+(assoc {} :name "Peggy Hill") ;; => {:name "Peggy Hill"}
+(dissoc {:name "Bill Dauterive" :occupation nil} :occupation) ;; => {:name "Bill Dauterive"}
+(count "Hank Hill") ;; => 9
+```
+
+Sequence functions are functions that take a *sequential type* (*map vector list string set*) and a function as arguments, and perform some sort of operation on the sequence and *return a new sequence*. E.g. `map` function will always return a sequence (list), even if you pass it a vector.
+
+Collection functions are functions that take any type that implements the `IPersistentCollection` interface as an argument and performs some sort of operation on the argument. `count` is unique in this case since it can also be given a string even though a string is not a collection.
+
+That's it for most common functions. More examples can be found from the [Clojure Cheatsheet](https://clojure.org/api/cheatsheet).
+
+## Reader
+
+The reader is a unique feature of Clojure. You could call it an extra build step. This step is taken before the source code gets compiled.
+Clojure has two steps of compilation in a sense, first the reader will turn your Clojure code into Clojure data structures, and then the compiler will turn the data structures into Java byte code. You can actually test the reader with Clojure's `read-string` function.
+
+```clojure
+(read-string "(+ 1 2 3)") ;; => (+ 1 2 3)
+```
+
+Why is this useful? Well, in Clojure the compilation and reading (parsing) of the code are completely separate. This is an essential part in Clojure. The reader allows us to change how the code behaves, or even what the code looks like. This is done with the help of *macros*. In the above example we see a straightforward relationship between the reader and the data structure it produces. However, as mentioned, we can manipulate the data structure with the help of *reader macros*.
+
+```clojure
+(read-string "'(a b c)") ;; => (quote (a b c))
+```
+Above we see an example of a *reader macro*. `'` is the *quote* macro. The *quote* macro yields unevaluated Clojure expression.
+Clojure offers a handful of *reader macros*. To get a full understanding on how the reader works and how to reader macros work, you can read everything about the reader here: https://clojure.org/reference/reader
+
+## Macros
+
+Macros are one of the features that make Clojure amazing! Macros are quite special. Unlike normal functions, marcos are placed between the reader and compiler in the Clojure lifecycle, and unlike functions, macros are created with the `defmacro` special form. What this means, is that with macros we can manipulate unevaluated (yielded) data structures. We can essentially create new code and change existing code.
+
+Practical example:
+
+```clojure
+(defmacro macro-fn [form]
+  (drop-last form))
+
+(macro-fn (+ 2 nil)) ;; => 2
+
+(defn normal-fn [form]
+  (drop-last form))
+
+(normal-fn (+ 2 nil)) ;; => java.lang.NullPointerException
+```
+
+Why does this happen? Clojure syntax is evaluated from the inside out, except in macros and special forms. Macros get passed unevaluated expressions, that's why we can manipulate the unevaluated expression however we wish. In the case of a function, the inner most expression will always get evaluated first, and the result of that expression will get passed to the function body. In the example above the inner most expression resulted in a `NullPointerException`.
+
+And that's it! We covered the bare basics of the language! Hopefully you understand how Clojure works and how to write basic expressions in Clojure. Hopefully you also have a grasp on the different *types* in Clojure, and how the language is structured. Next up we'll get to tackle some real coding challenges in the *koans* section.
 
 ## References
 
