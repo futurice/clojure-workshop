@@ -254,7 +254,7 @@ Next we will be looking at very common functions, and we'll also be breaking the
 
 The plus `+` function takes 0 to infinite amount of numbers as arguments and sums them.
 
-All arithmetic functions (- * / +) work the same way. They all take between 0 or 1 to infinite, and performs their respective arithmetic operation on the given arguments.
+All arithmetic functions (- * / +) work the same way. They all take between 0 or 1 to infinite amount of arguments, and performs their respective arithmetic operation on the given arguments.
 
 ### Keyword
 
