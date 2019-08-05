@@ -8,7 +8,7 @@
             [ring.middleware.json :as json-middleware]
             [ring.middleware.cors :refer [wrap-cors]]))
 
-(def db-url "postgresql://postgres@localhost:5432/clojure_workshop_db")
+(def db-url (or (System/getenv "DATABASE_URL") "postgresql://postgres@localhost:5432/clojure_workshop_db"))
 
 (def-db-fns "webapp/queries.sql")
 

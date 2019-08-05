@@ -9,6 +9,7 @@
                  [com.layerware/hugsql "0.4.9"]
                  [ring-cors "0.1.13"]
                  [ring/ring-defaults "0.3.2"]]
+  :uberjar-name "webapp-standalone.jar"
   :plugins [[lein-ring "0.12.5"]]
   :ring {:handler webapp.handler/app}
   :profiles
