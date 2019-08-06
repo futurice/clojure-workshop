@@ -10,6 +10,7 @@ The workshop materials are intended to guide participants through the whole lang
 The workshop has successfully been organized in:
 
 - Futurice Helsinki
+- Futurice Munich
 
 ## Prerequisite
 
