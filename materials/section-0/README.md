@@ -105,7 +105,7 @@ As with numbers and strings, booleans are also plain old Java objects.
 (class {:1 2 :3 4}) ;; => clojure.lang.PersistentArrayMap
 ```
 
-Clojure has four fundamental *collection* types, `list`, `vector`, `set` and `map`. Again, these are all plain old Java objects, just like everything else so far. Difference between `list` and `vector` is that `list` is a Java `LinkedList` while `vector` is a Java `ArrayList`. `Set` is a list of unique values. And `map` is a basic *key value pair* data structure.
+Clojure has four fundamental *collection* types, `list`, `vector`, `set` and `map`. Again, these are all plain old Java objects, just like everything else so far.  Clojure collections have some remarkable properties we'll learn later; but, for now the important difference between `list` and `vector` is that `list` behaves like a Java `LinkedList` while `vector` is more like a Java `ArrayList`. `Set` is a list of unique values. And `map` is a basic *key value pair* data structure.
 All of these types are sequential, meaning that they can all be cast into sequences. List is the only type that is naturally a sequence as it implements the Java `ISeq` interface. Sequences allows you to use all of the Clojure STL sequence functions (map, reduce, filter, etc) on these types. Something you might have noticed is that quotation mark in front of the `list`. You might also remember that the first thing inside parenthesis is always interpreted as a function to call, while still true the case for `list` is unique. The quotation mark is what is known as a *special form*. It yields the evaluation of the expression and returns a `list` of unevaluated values instead of interpreting it as a function and arguments.
 
 #### Keywords
